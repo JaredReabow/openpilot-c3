@@ -48,6 +48,7 @@ class CarState(CarStateBase):
     ret.gasPressed = ret.gas > 0
     ret.brake = pt_cp.vl["ESP_05"]["ESP_Bremsdruck"] / 250.0  # FIXME: this is pressure in Bar, not sure what OP expects
     ret.brakePressed = bool(pt_cp.vl["ESP_05"]["ESP_Fahrer_bremst"])
+    self.esp_hold_confirmation = pt_cp.vl["ESP_21"]["ESP_Haltebestaetigung"]
 
     # Update gear and/or clutch position data.
     if trans_type == TransmissionType.automatic:
@@ -177,6 +178,7 @@ class CarState(CarStateBase):
       ("EPS_VZ_Lenkmoment", "LH_EPS_03", 0),        # Driver torque input sign
       ("EPS_HCA_Status", "LH_EPS_03", 3),           # EPS HCA control status
       ("ESP_Tastung_passiv", "ESP_21", 0),          # Stability control disabled
+      ("ESP_Haltebestaetigung", "ESP_21", 0),       # ESP hold confirmation
       ("KBI_MFA_v_Einheit_02", "Einheiten_01", 0),  # MPH vs KMH speed display
       ("KBI_Handbremse", "Kombi_01", 0),            # Manual handbrake applied
       ("TSK_Status", "TSK_06", 0),                  # ACC engagement status from drivetrain coordinator
